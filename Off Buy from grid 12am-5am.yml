@@ -15,6 +15,10 @@ conditions:
   - condition: time
     after: "00:00:00"
     before: "05:00:00"
+  - not:
+    - condition: state
+      entity_id: select.sigen_plant_remote_ems_control_mode
+      state: Maximum Self Consumption 
 actions:
   - action: notify.mobile_app_iphone
     metadata: {}
