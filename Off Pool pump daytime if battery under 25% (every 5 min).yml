@@ -1,0 +1,25 @@
+alias: "Off: Pool pump daytime if battery under 25% (every 5 min)"
+description: >-
+  Turns off pool pump during daytime if battery drops below 25% (checked every 5
+  minutes)
+triggers:
+  - trigger: time_pattern
+    minutes: /5
+conditions:
+  - condition: time
+    after: "09:00:00"
+    before: "16:00:00"
+  - condition: numeric_state
+    entity_id: sensor.sigen_plant_battery_state_of_charge
+    below: 25
+  - condition: state
+    entity_id: switch.deck_fan_mss310_main_channel
+    state: "on"
+actions:
+  - action: switch.turn_off
+    entity_id: switch.deck_fan_mss310_main_channel
+  - action: notify.mobile_app_iphone
+    metadata: {}
+    data:
+      message: Pump turned off
+mode: single

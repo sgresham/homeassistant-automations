@@ -1,0 +1,25 @@
+alias: "On: Pool pump daytime if battery over 25% (every 5 min)"
+description: >-
+  Turns on pool pump during daytime if battery raises above 25% (checked every 5
+  minutes)
+triggers:
+  - trigger: time_pattern
+    minutes: /5
+conditions:
+  - condition: time
+    after: "09:00:00"
+    before: "16:00:00"
+  - condition: numeric_state
+    entity_id: sensor.sigen_plant_battery_state_of_charge
+    above: 25
+  - condition: state
+    entity_id: switch.deck_fan_mss310_main_channel
+    state: "off"
+actions:
+  - action: switch.turn_on
+    entity_id: switch.deck_fan_mss310_main_channel
+  - action: notify.mobile_app_iphone
+    metadata: {}
+    data:
+      message: Pump turned on
+mode: single

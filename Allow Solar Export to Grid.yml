@@ -1,0 +1,22 @@
+alias: Allow Solar Export to Grid
+description: ""
+triggers:
+  - trigger: numeric_state
+    entity_id:
+      - sensor.sigen_plant_battery_state_of_charge
+    above: 99
+conditions:
+  - condition: numeric_state
+    entity_id: sensor.earningsflexup
+    above: 0
+actions:
+  - device_id: d5fc78e29b77eda21dac1b11dc3f3d4d
+    domain: select
+    entity_id: e0222d04b8b32a9fedbf272df213f3f4
+    type: select_option
+    option: Maximum Self Consumption
+  - action: notify.mobile_app_iphone
+    metadata: {}
+    data:
+      message: Starting export to grid
+mode: single
