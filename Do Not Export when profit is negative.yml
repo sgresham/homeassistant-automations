@@ -12,6 +12,9 @@ conditions:
   - condition: numeric_state
     entity_id: sensor.earningsflexup
     below: 0
+  - condition: time
+    after: "09:00:00"
+    before: "17:00:00"
 actions:
   - action: select.select_option
     metadata: {}
