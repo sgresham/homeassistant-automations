@@ -1,0 +1,37 @@
+alias: Allow Export to Grid when value is greater than 30 cents
+description: ""
+triggers:
+  - trigger: time_pattern
+    minutes: /5
+    seconds: "30"
+conditions:
+  - condition: numeric_state
+    entity_id: sensor.earningsflexup
+    above: 0.30
+  - condition: time
+    after: "18:00:00"
+    before: "20:00:00"
+actions:
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: Command Discharging (PV First)
+    target:
+      entity_id: select.sigen_plant_remote_ems_control_mode
+  - action: number.set_value
+    metadata: {}
+    data:
+      value: 5
+    target:
+          entity_id: number.sigen_plant_ess_max_discharging_limit
+  - action: number.set_value
+    metadata: {}
+    data:
+      value: 0
+    target:
+      entity_id: number.sigen_plant_ess_max_charging_limit
+  - action: notify.mobile_app_iphone
+    metadata: {}
+    data:
+      message: Starting export to grid
+mode: single
