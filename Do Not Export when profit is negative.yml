@@ -1,5 +1,5 @@
 alias: Deny Solar Export to Grid
-description: ""
+description: "Prevents export of solar energy to the grid when grid export is unprofitable, even if the battery is full, during daytime hours. Sets EMS mode and discharge limit accordingly, and notifies user."
 triggers:
   - trigger: time_pattern
     minutes: /5

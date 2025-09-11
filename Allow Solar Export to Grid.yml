@@ -1,5 +1,5 @@
 alias: Allow Solar Export to Grid
-description: ""
+description: "Allows export of solar energy to the grid when the battery is charged above 99%, grid export is profitable, and during daytime hours. Switches the plant EMS control mode and sends a notification."
 triggers:
   - trigger: time_pattern
     minutes: /5

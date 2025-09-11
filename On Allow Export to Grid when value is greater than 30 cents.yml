@@ -1,5 +1,5 @@
 alias: Allow Export to Grid when value is greater than 30 cents
-description: ""
+description: "Allows export of energy to the grid between 6 PM and 8 PM when the export price exceeds 30 cents, by setting the EMS control mode and discharge limit, and sends a notification."
 triggers:
   - trigger: time_pattern
     minutes: /5
