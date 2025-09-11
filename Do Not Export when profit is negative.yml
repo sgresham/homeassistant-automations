@@ -1,25 +1,30 @@
-alias: Do Not Export when profit is negative
+alias: Deny Solar Export to Grid
 description: ""
 triggers:
-  - trigger: numeric_state
+  - trigger: time_pattern
+    minutes: /5
+    seconds: "30"
+conditions:
+  - condition: numeric_state
     entity_id:
       - sensor.sigen_plant_battery_state_of_charge
     above: 99
-conditions:
   - condition: numeric_state
     entity_id: sensor.earningsflexup
     below: 0
 actions:
-  - device_id: d5fc78e29b77eda21dac1b11dc3f3d4d
-    domain: select
-    entity_id: e0222d04b8b32a9fedbf272df213f3f4
-    type: select_option
-    option: Command Discharging (PV First)
-  - device_id: d5fc78e29b77eda21dac1b11dc3f3d4d
-    domain: number
-    entity_id: c22af906745603e2298f7f5d99a55a5c
-    type: set_value
-    value: 0
+  - action: select.select_option
+    metadata: {}
+    data:
+      option: Command Discharging (PV First)
+    target:
+      entity_id: select.sigen_plant_remote_ems_control_mode
+  - action: number.set_value
+    metadata: {}
+    data:
+      value: 0
+    target:
+      entity_id: number.sigen_plant_ess_max_discharging_limit
   - action: notify.mobile_app_iphone
     metadata: {}
     data:

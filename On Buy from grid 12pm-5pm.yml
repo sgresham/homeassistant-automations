@@ -1,25 +1,20 @@
 alias: "On: Buy from grid 12pm-5pm"
-description: ""
+description: "This automation turns on the “Buy from grid” switch between 12:00 PM and 5:00 PM to allow electricity consumption from the grid during these hours."
 triggers:
-  - trigger: numeric_state
+  - trigger: time_pattern
+    minutes: /5
+    seconds: "30"
+conditions:
+  - condition: numeric_state
     entity_id:
       - sensor.costsflexup
-    below: 0.15
-conditions:
+    below: 0.20
   - condition: numeric_state
     entity_id: sensor.sigen_plant_battery_state_of_charge
     below: 50
   - condition: time
     after: "12:00:00"
     before: "17:00:00"
-    weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
-      - sat
-      - sun
 actions:
   - action: notify.mobile_app_iphone
     metadata: {}
